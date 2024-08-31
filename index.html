@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors Game</title>
     <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> <!-- Added font -->
-    <style>
-        body {
-            background-image: url('th.jpeg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            font-family: 'Poppins', sans-serif; /* Apply font */
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Rock Paper Scissors</h1>
+
+    <div class="flex-container">
+        <div class="score-board">
+            <div class="score">
+                <p id="user-score">0</p>
+                <p>You</p>
+            </div>
+            <div class="score">
+                <p id="comp-score">0</p>
+                <p>System</p>
+            </div>
+        </div>
+    </div>
+
     <div class="choices">
         <div class="choice" id="rock">
             <img src="th (1).jpeg"/>
@@ -29,19 +34,13 @@
             <img src="th (2).jpeg"/>
         </div>
     </div>
-    <div class="score-board">
-        <div class="score">
-          <p id="user-score">0</p>
-          <p>You</p>
-        </div>
-        <div class="score">
-          <p id="comp-score">0</p>
-          <p>System</p>
-        </div>
-      </div>
-      <div class="msg-container">
+
+    <div class="msg-container">
         <p id="msg">Play your move</p>
-      </div>
-      <script src="script.js"></script>
+    </div>
+
+    <button id="play-again" class="hidden">PLAY AGAIN</button> <!-- Play Again Button -->
+
+    <script src="script.js"></script>
 </body>
 </html>
