@@ -1,12 +1,13 @@
 let userScore = 0;
 let compScore = 0;
-const winningScore = 10; // First to 10 points wins
+const winningScore = 10;
 
 const choices = document.querySelectorAll(".choice");
 const msg = document.querySelector("#msg");
-
 const userScorePara = document.querySelector("#user-score");
 const compScorePara = document.querySelector("#comp-score");
+const playAgainButton = document.querySelector("#play-again");
+const confettiContainer = document.querySelector("#confetti-container");
 
 const genCompChoice = () => {
   const options = ["rock", "paper", "scissors"];
@@ -19,22 +20,58 @@ const drawGame = () => {
   msg.style.backgroundColor = "#081b31";
 };
 
+const disableChoices = () => {
+  choices.forEach((choice) => {
+    choice.style.pointerEvents = "none";
+  });
+};
+
+const resetGame = () => {
+  userScore = 0;
+  compScore = 0;
+  userScorePara.innerText = userScore;
+  compScorePara.innerText = compScore;
+  msg.innerText = "Play your move";
+  msg.style.backgroundColor = "#081b31";
+  choices.forEach((choice) => {
+    choice.style.pointerEvents = "auto";
+  });
+  playAgainButton.classList.add("hidden");
+};
+
+const throwConfetti = () => {
+  const confettiContainer = document.createElement("div");
+  confettiContainer.classList.add("confetti-container");
+  document.body.appendChild(confettiContainer);
+
+  for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+    confettiContainer.appendChild(confetti);
+  }
+
+  setTimeout(() => {
+    document.body.removeChild(confettiContainer);
+  }, 5000);
+};
+
+playAgainButton.addEventListener("click", resetGame);
+
 const checkWinner = () => {
   if (userScore === winningScore) {
     msg.innerText = "Congratulations! You won the game!";
     msg.style.backgroundColor = "green";
-    disableChoices(); // Stop the game after the winner is declared
+    disableChoices();
+    throwConfetti();
+    playAgainButton.classList.remove("hidden");
   } else if (compScore === winningScore) {
     msg.innerText = "Sorry! The computer won the game.";
     msg.style.backgroundColor = "red";
-    disableChoices(); // Stop the game after the winner is declared
+    disableChoices();
+    playAgainButton.classList.remove("hidden");
   }
-};
-
-const disableChoices = () => {
-  choices.forEach((choice) => {
-    choice.style.pointerEvents = "none"; // Disable further clicks
-  });
 };
 
 const showWinner = (userWin, userChoice, compChoice) => {
@@ -49,7 +86,7 @@ const showWinner = (userWin, userChoice, compChoice) => {
     msg.innerText = `You lost. ${compChoice} beats your ${userChoice}`;
     msg.style.backgroundColor = "red";
   }
-  checkWinner(); // Check if someone reached 10 points
+  checkWinner();
 };
 
 const playGame = (userChoice) => {
@@ -63,7 +100,7 @@ const playGame = (userChoice) => {
       userWin = compChoice === "paper" ? false : true;
     } else if (userChoice === "paper") {
       userWin = compChoice === "scissors" ? false : true;
-    } else if (userChoice === "scissors") { // Scissors functional logic
+    } else if (userChoice === "scissors") {
       userWin = compChoice === "rock" ? false : true;
     }
     showWinner(userWin, userChoice, compChoice);
